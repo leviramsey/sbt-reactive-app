@@ -175,7 +175,7 @@ trait DeployableApp extends App {
 
           val rpArgs =
             Vector(
-              dockerAlias.value.versioned,
+              dockerAlias.value.toString,
               "--env",
               s"JAVA_OPTS=${javaOpts.mkString(" ")}") ++
               (if (bootstrapEnabled) Vector("--akka-cluster-skip-validation", "--pod-controller-replicas", deployMinikubeAkkaClusterBootstrapContactPoints.value.toString) else Vector.empty) ++
@@ -190,7 +190,7 @@ trait DeployableApp extends App {
               minikubeExec.getAbsolutePath +: dockerBuildCommand.value,
             log)
 
-          log.info(s"Built image ${dockerAlias.value.versioned}")
+          log.info(s"Built image ${dockerAlias.value}")
 
           if (reactiveSandbox) {
             // FIXME: Make tiller & reactive-sandbox names configurable

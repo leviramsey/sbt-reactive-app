@@ -437,14 +437,12 @@ case object BasicApp extends DeployableApp {
         },
         rpDockerPublish := {
           val _ = publishLocal.value
-          val alias = dockerAlias.value
+          val aliases = dockerAliases.value
           val log = streams.value.log
           val execCommand = dockerExecCommand.value
 
-          publishDocker(execCommand, alias.versioned, log)
-
-          if (dockerUpdateLatest.value) {
-            publishDocker(execCommand, alias.latest, log)
+          aliases.foreach { alias =>
+            publishDocker(execCommand, alias.toString, log)
           }
         }))
 
